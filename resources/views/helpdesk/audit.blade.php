@@ -1,0 +1,4 @@
+@extends('helpdesk.layout')
+@section('title','Audit History')
+@section('subtitle','Ticket workflow and configuration activity.')
+@section('content')<section class="card"><div class="table-wrap"><table><thead><tr><th>Time</th><th>Actor</th><th>Ticket</th><th>Action</th><th>Details</th></tr></thead><tbody>@forelse($events as $event)<tr><td>{{ $event->created_at->format('Y-m-d H:i') }}</td><td>{{ $event->user?->name ?? 'System' }}</td><td>@if($event->ticket)<a href="{{ route('helpdesk.ticket',$event->ticket) }}">{{ $event->ticket->ticket_number }}</a>@else—@endif</td><td>{{ $event->action }}</td><td>{{ $event->description }}</td></tr>@empty<tr><td colspan="5" class="empty">No activity recorded yet.</td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $events->links() }}</div></section>@endsection

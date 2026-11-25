@@ -1,0 +1,12 @@
+Options -Indexes
+
+<FilesMatch "^(\.|artisan$|composer\.(json|lock)$|phpunit\.xml$)">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # XAMPP serves this project from htdocs; application internals stay private.
+    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|storage|tests|vendor)(?:/|$) - [F,L,NC]
+    RewriteRule ^$ public/ [R=302,L]
+</IfModule>
